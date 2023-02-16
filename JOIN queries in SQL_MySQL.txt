@@ -1,0 +1,107 @@
+show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| students           |
+| sys                |
++--------------------+
+use students;
+
+show tables;
++-------------------+
+| Tables_in_students|
++-------------------+
+| courses           |
+| general           |
++-------------------+
+
+select * from general;
++----+--------+--------+-----+---------+
+| ID | fname  |  lname | age | gender  |
++----+--------+--------+-----+---------+
+| 1  |   anna |  smith | 18  | F       |
+| 2  |   jhon |  smith | 19  | NULL    | 
+| 3  |  nicol |   stok | 19  | F       | 
+| 4  |   alan |     po | 21  | NULL    |
+| 5  |  peter |    pen | 24  | NULL    |
+| 6  |   jack | london | 27  | M       |
++----+--------+----+---+-----+---------+
+
+select * from courses;
++---------+--------+---+
+| faculty | number |id |
++---------+--------+---+
+| bio     | 1      | 1 |
+| chem    | 2      | 2 |
+| math    | 3      | 3 |
+| gum     | 4      | 4 |
+| teo     | 1      | 5 |
+| phys    | 4      | 7 |
++---------+--------+---+
+
+Выведем значения. Из таблицы courses - faculty,а из таблицы general - fname и lname.
+
+SELECT courses.faculty, general.fname, general.lname FROM courses JOIN general ON courses.id = general.id;
++---------+--------+-------+
+| faculty | fname  | lname |
++---------+--------+-------+
+| bio     |   anna | smith |
+| chem    |   jhon | smith |
+| math    | nicole |  stok |
+| gum     |   alan |    po |
+| teo     |  peter |   pen |
++---------+--------+-------+
+
+Выведем все строки из таблицы courses даже если их нет в general
+
+SELECT courses.number, general.fname, general.gender FROM courses LEFT JOIN general ON courses.id = general.id;
++---------+--------+--------+
+| number  | fname  | gender |
++---------+--------+--------+
+| 1       | anna   | F      |
+| 2       | jhon   | NULL   |
+| 3       | nicole | F      |
+| 4       | alan   | NULL   |
+| 1       | peter  | NULL   |
+| 4       | NULL   | NULL   |
++---------+--------+--------+
+
+Объединение для Right Join
+SELECT courses.id, general.fname, general.lname, general.gender, courses.faculty FROM courses RIGHT JOIN general ON courses.id = general.id;
++------+--------+--------+---------+---------+
+| ID   | fname  |  lname | gender  | faculty |
++------+--------+--------+---------+---------+
+| 1    |   anna |  smith | F       |  bio    |
+| 2    |   jhon |  smith | NULL    |  chem   |
+| 3    |  nicol |   stok | F       |  math   |
+| 4    |   alan |     po | NULL    |  gum    |
+| 5    |  peter |    pen | NULL    |  teo    |
+| NULL |   jack | london | M       |  NULL   |
++------+--------+----+---+---------+---------+
+
+
+Вложенный подзапрос
+SELECT fname,lname,gender.id FROM general WHERE age IN (SELECT age FROM general WHERE id>1 and age=21);
++--------+--------+---------+-----+
+| fname  |  lname | gender  | ID  |
++--------+--------+---------+-----+
+|   alan |     po | NULL    | 4   |
+|  peter |    pen | NULL    | 5   |
+|   jack | london | M       | 6   |
++--------+--------+---------+-----+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,10 @@
+Задача.
+Напишите SQL запрос который выведет 10 знаков, отсортированных по убыванию даты их создания(OrderDate).
+Вывести поля:OrderID,OrderDate,CustomerName(имя покупателя).
+Используйте публичную базу данных w3schools.
+Обязательные требования к коду запроса: для всех видов соединений, если будете их использовать, применяйте операторы JOIN. 
+Не перечисляйте соединяемые таблицы через запятую
+
+Решение: SELECT OrderID, OrderDate, CustomerName
+         FROM Orders
+         JOIN Customers ON Orders.CustomerID = Customers.CustomerID ORDER BY OrderDate DESC LIMIT 10;

@@ -1,0 +1,113 @@
+SHOW databases;                            - показать все базы данных
+CREATE database students;                  - создаём базу данных
+DROP database test;                        - можно удалить базу данных
+USE students;                              - выбираем базу данных с которой хотим работать
+SHOW tables;                               - смотрим какие таблицы есть в выбранной базе данных
+              (Сейчас таблиц нет)
+
+   CREATE table courses                    - создаём таблицу
+-> (id INT(11) NOT NULL PRIMARY KEY,  
+-> faculty VARCHAR(55) NULL,
+-> number INT(2) NULL);                    - наименование столбцов, наимаенование полей и тип оторый будет применяться к полю
+
+
+SELECT * FROM courses;                     - смотрим какие значения есть в таблице
+
+              (На данный момент в таблице нет значений)
+
+DESC courses;                              - проверяем какие у нас есть поля в этой таблице и типы данных в полях
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| id      | int          | NO   | PRI | NULL    |       |
+| faculte | varchar(55)  | YES  |     | NULL    |       |
+| number  | int          | YES  |     | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+              (Создадим данные)
+INSERT INTO courses VALUES (1, "bio", 1)   
+INSERT INTO courses VALUES (2, "chem", 2)
+INSERT INTO courses VALUES (3, "math", 3)
+INSERT INTO courses VALUES (4, "geo", 4)
+INSERT INTO courses VALUES (5, "gum", 5)   - значения в поля вводим по порядку этих полей
+
+             (Теперь мы можем посмотреть нашу таблицу и вывести значения которые в ней содержатся)
+
+SELECT * FROM courses;  
++----+---------+--------+            
+| id | faculty | number | 
++----+---------+--------+
+| 1  | bio     |      1 | 
+| 2  | chem    |      2 |  
+| 3  | math    |      3 |  
+| 4  | geo     |      4 |
+| 5  | gum     |      5 |
++----+---------+--------+
+
+             (Удалим значение из таблицы)
+DELETE FROM courses WHERE faculty="gum";
+
+             (Проверим, что отсалось в таблице)
+SELECT * FROM courses;
++----+---------+--------+            
+| id | faculty | number | 
++----+---------+--------+
+| 1  | bio     |      1 | 
+| 2  | chem    |      2 |  
+| 3  | math    |      3 |  
+| 4  | geo     |      4 |
++----+---------+--------+
+
+             (Изменим существующее значение в нашей таблице)
+UPDATE courses SET faculty="gum" WHERE faculty="geo";
+
+             (Проверим, что получилось)
+SELECT * FROM courses;
++----+---------+--------+            
+| id | faculty | number | 
++----+---------+--------+
+| 1  | bio     |      1 | 
+| 2  | chem    |      2 |  
+| 3  | math    |      3 |  
+| 4  | gum     |      4 |
++----+---------+--------+
+
+             (Удалим столбец из таблицы)
+ALTER TABLE courses DROP COLUMN id;
+
+             (Проверим, что столбец удалился)
+SELECT * FROM courses;
++---------+--------+            
+| faculty | number | 
++---------+--------+
+| bio     |      1 | 
+| chem    |      2 |  
+| math    |      3 |  
+| gum     |      4 |
++---------+--------+
+
+            (Добавим обратно первычный ключ, сейчас он будет рспологаться после поля number)
+ALTER TABLE courses ADD COLUMN id INT AFTER number;
+            (Проверяем)
+SELECT * FROM courses;
++---------+--------+------+
+| faculty | number |  id  |
++---------+--------+------+
+| bio     |      1 | NULL |
+| chem    |      2 | NULL |
+| math    |      3 | NULL |
+| gum     |      3 | NULL |
++---------+--------+------+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
